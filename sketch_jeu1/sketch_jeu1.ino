@@ -207,44 +207,55 @@ void loose() {
   byte S[5]={ B00110001,B01001001,B01001001,B01001001,B01000110  };
   byte E[5]={ B11111110,B10010010,B10010010,B10010010,B00000000  };
 
-  delay(300);
-  lc.setRow(0,0,L[0]);
-  lc.setRow(0,1,L[1]);
-  lc.setRow(0,2,L[2]);
-  lc.setRow(0,3,L[3]);
-  lc.setRow(0,4,L[4]);
-  delay(300);
-  lc.clearDisplay(0);
-  delay(150);
-  lc.setRow(0,0,O[0]);
-  lc.setRow(0,1,O[1]);
-  lc.setRow(0,2,O[2]);
-  lc.setRow(0,3,O[3]);
-  lc.setRow(0,4,O[4]);
+  //lettre L
+  lc.setColumn(0,2,255);
+  lc.setColumn(0,3,1);
+  lc.setColumn(0,4,1);
+  lc.setColumn(0,5,1);
+  lc.setColumn(0,6,1);
   delay(300);
   lc.clearDisplay(0);
   delay(150);
-  lc.setRow(0,0,O[0]);
-  lc.setRow(0,1,O[1]);
-  lc.setRow(0,2,O[2]);
-  lc.setRow(0,3,O[3]);
-  lc.setRow(0,4,O[4]);
+
+  //lettre O
+  lc.setColumn(0,2,126);
+  lc.setColumn(0,3,129);
+  lc.setColumn(0,4,129);
+  lc.setColumn(0,5,129);
+  lc.setColumn(0,6,126);
   delay(300);
   lc.clearDisplay(0);
   delay(150);
-  lc.setRow(0,0,S[0]);
-  lc.setRow(0,1,S[1]);
-  lc.setRow(0,2,S[2]);
-  lc.setRow(0,3,S[3]);
-  lc.setRow(0,4,S[4]);
+
+  //lettre O
+  lc.setColumn(0,2,126);
+  lc.setColumn(0,3,129);
+  lc.setColumn(0,4,129);
+  lc.setColumn(0,5,129);
+  lc.setColumn(0,6,126);
   delay(300);
   lc.clearDisplay(0);
   delay(150);
-  lc.setRow(0,0,E[0]);
-  lc.setRow(0,1,E[1]);
-  lc.setRow(0,2,E[2]);
-  lc.setRow(0,3,E[3]);
-  lc.setRow(0,4,E[4]);
+
+  //lettre S
+  lc.setColumn(0,2,49);
+  lc.setColumn(0,3,73);
+  lc.setColumn(0,4,73);
+  lc.setColumn(0,5,73);
+  lc.setColumn(0,6,70);
+  delay(300);
+  lc.clearDisplay(0);
+  delay(150);
+
+  //lettre E
+  lc.setColumn(0,2,255);
+  lc.setColumn(0,3,137);
+  lc.setColumn(0,4,137);
+  lc.setColumn(0,5,137);
+  lc.setColumn(0,6,137);
+  delay(300);
+  lc.clearDisplay(0);
+  delay(500);
   
   
 }
