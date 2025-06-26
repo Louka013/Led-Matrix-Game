@@ -17,7 +17,8 @@ int startingPositionInLine;
 //joystick output
 #define xAxe  A2
 #define yAxe  A3
-#define button A4
+#define button 2
+
 
 //Player position
 int xPosition = 4;
@@ -66,7 +67,11 @@ void loop() {
         player();
 
         if (xPosition == i & yPosition == startingPositionInLine) {
-          while (1==1) {
+          if (digitalRead(button) == 0) {
+            lc.clearDisplay(0);
+            loop();
+            }
+          else {
             loose();
           }
         }
@@ -82,7 +87,11 @@ void loop() {
         player();
 
         if (xPosition == i & yPosition == startingPositionInLine) {
-          while (1==1) {
+          if (digitalRead(button) == 0) {
+            lc.clearDisplay(0);
+            loop();
+            }
+          else {
             loose();
           }
         }
@@ -103,7 +112,11 @@ void loop() {
         player();
 
         if (xPosition == startingPositionInLine & yPosition == i) {
-          while (1==1) {
+          if (digitalRead(button) == 0) {
+            lc.clearDisplay(0);
+            loop();
+            }
+          else {
             loose();
           }
         }
@@ -120,7 +133,11 @@ void loop() {
         player();
 
         if (xPosition == startingPositionInLine & yPosition == i) {
-          while (1==1) {
+          if (digitalRead(button) == 0) {
+            lc.clearDisplay(0);
+            loop();
+            }
+          else {
             loose();
           }
         }
@@ -256,6 +273,9 @@ void loose() {
   delay(300);
   lc.clearDisplay(0);
   delay(500);
-  
-  
+
+  if (digitalRead(button) == 0) {
+     lc.clearDisplay(0);
+    loop();
+  }
 }

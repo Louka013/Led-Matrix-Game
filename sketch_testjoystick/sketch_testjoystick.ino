@@ -1,6 +1,6 @@
 #define xAxe  A2
 #define yAxe  A3
-#define button A4
+#define button 2
 void setup() {
   Serial.begin(9600);
   pinMode(xAxe, INPUT);
@@ -9,9 +9,7 @@ void setup() {
 }
 
 void loop() {
-  Serial.print("axe x :");
-  Serial.print(analogRead(xAxe));
-  Serial.print(" axe y :");
-  Serial.println(analogRead(yAxe));
+  Serial.print("button state : ");
+  Serial.println(digitalRead(button));
   delay(500);
 }
