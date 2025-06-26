@@ -67,13 +67,10 @@ void loop() {
         player();
 
         if (xPosition == i & yPosition == startingPositionInLine) {
-          if (digitalRead(button) == 0) {
-            lc.clearDisplay(0);
-            loop();
-            }
-          else {
+          while (digitalRead(button)==1){
             loose();
           }
+          loop();
         }
         
       }
@@ -87,13 +84,10 @@ void loop() {
         player();
 
         if (xPosition == i & yPosition == startingPositionInLine) {
-          if (digitalRead(button) == 0) {
-            lc.clearDisplay(0);
-            loop();
-            }
-          else {
+          while (digitalRead(button)==1){
             loose();
           }
+          loop();
         }
         
       }
@@ -112,13 +106,10 @@ void loop() {
         player();
 
         if (xPosition == startingPositionInLine & yPosition == i) {
-          if (digitalRead(button) == 0) {
-            lc.clearDisplay(0);
-            loop();
-            }
-          else {
+          while (digitalRead(button)==1){
             loose();
           }
+          loop();
         }
         
       }
@@ -133,13 +124,10 @@ void loop() {
         player();
 
         if (xPosition == startingPositionInLine & yPosition == i) {
-          if (digitalRead(button) == 0) {
-            lc.clearDisplay(0);
-            loop();
-            }
-          else {
+          while (digitalRead(button)==1){
             loose();
           }
+          loop();
         }
         
       }
@@ -274,8 +262,4 @@ void loose() {
   lc.clearDisplay(0);
   delay(500);
 
-  if (digitalRead(button) == 0) {
-     lc.clearDisplay(0);
-    loop();
-  }
 }

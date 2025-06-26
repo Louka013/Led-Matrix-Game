@@ -238,5 +238,10 @@ void loose() {
   lc.setRow(0,3,E[3]);
   lc.setRow(0,4,E[4]);
   
-  
 }
+
+
+while (digitalRead(button)==0){
+            loose()
+          }
+          loop()
