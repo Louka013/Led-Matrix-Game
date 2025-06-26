@@ -8,6 +8,18 @@
 LedControl lc=LedControl(12,11,10,1);
 
 unsigned long delaytime=100;
+
+/*création d'une liste de paramètres d'un point, grace aux 
+quelles on pourra mettre à jour le déplacement du point*/
+int columnState;
+int rowState;
+int columnStart;
+int rowStart;
+int pointParameters[4]={columnStart, rowStart, columnState, rowState};
+
+
+
+
 int rowColumn;
 int startingLine;
 int startingPositionInLine;
@@ -75,5 +87,9 @@ void loop() {
       }
     }
   }
+  
+}
+
+void updateeEnemies() {
   
 }
