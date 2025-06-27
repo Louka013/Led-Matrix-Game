@@ -7,12 +7,20 @@
  */
 LedControl lc=LedControl(12,11,10,1);
 
-unsigned long delaytime=50;
+unsigned long delaytime=75;
 
-//paramètre d'apparition des ennemis
-int rowColumn;
-int startingLine;
-int startingPositionInLine;
+/*création d'une liste de paramètres d'un point, grace aux 
+quelles on pourra mettre à jour le déplacement du point*/
+int columnState;
+int rowState;
+int columnStart;
+int rowStart;
+int pointParameters[4]={columnStart, rowStart, columnState, rowState};
+
+//variable aléatoire pour recréer un nouveau point de départ
+int rowOrColumn;
+int startingPosition;
+int highOrLow;
 
 //joystick output
 #define xAxe  A2
@@ -21,11 +29,15 @@ int startingPositionInLine;
 
 
 //Player position
-int xPosition = 4;
-int yPosition = 4;
+int xPosition = 3;
+int yPosition = 3;
 
 void setup() {
-
+  //pour restart
+  delay(delaytime);
+  //Player position
+  xPosition = 3;
+  yPosition = 3;
   /*
    The MAX72XX is in power-saving mode on startup,
    we have to do a wakeup call
@@ -43,96 +55,21 @@ void setup() {
   pinMode(yAxe, INPUT);
   pinMode(button, INPUT_PULLUP);
 
+  //paramètres du premier point ennemie pour chaque début de partie
+  columnStart = 4;
+  rowStart = 0;
+  columnState = 4;
+  rowState = 0;
+
   
 }
 
 
 
 void loop() {
-
+  collision();
+  updateEnemies();
   player();
-
-  rowColumn = random(0,2);
-  startingLine = random(0,2);
-  startingPositionInLine = random(0,8);
-
-  if (rowColumn == 0){
-    if (startingLine == 0) {
-      
-      for (int i=0; i<8; i++) {
-        
-        lc.setLed(0, i, startingPositionInLine, true);
-        delay(delaytime);
-        lc.setLed(0, i, startingPositionInLine, false);
-        player();
-
-        if (xPosition == i & yPosition == startingPositionInLine) {
-          while (digitalRead(button)==1){
-            loose();
-          }
-          loop();
-        }
-        
-      }
-    }
-    else {
-      for (int i=7; i>=0; i--) {
-        
-        lc.setLed(0, i, startingPositionInLine, true);
-        delay(delaytime);
-        lc.setLed(0, i, startingPositionInLine, false);
-        player();
-
-        if (xPosition == i & yPosition == startingPositionInLine) {
-          while (digitalRead(button)==1){
-            loose();
-          }
-          loop();
-        }
-        
-      }
-    }
-  }
-
-  else {
-    if (startingLine == 0) {
-    
-    
-      for (int i=0; i<8; i++) {
-        
-        lc.setLed(0, startingPositionInLine, i, true);
-        delay(delaytime);
-        lc.setLed(0, startingPositionInLine, i, false);
-        player();
-
-        if (xPosition == startingPositionInLine & yPosition == i) {
-          while (digitalRead(button)==1){
-            loose();
-          }
-          loop();
-        }
-        
-      }
-
-  }
-    else {
-      for (int i=7; i>=0; i--) {
-        
-        lc.setLed(0, startingPositionInLine, i, true);
-        delay(delaytime);
-        lc.setLed(0, startingPositionInLine, i, false);
-        player();
-
-        if (xPosition == startingPositionInLine & yPosition == i) {
-          while (digitalRead(button)==1){
-            loose();
-          }
-          loop();
-        }
-        
-      }
-    }
-  }
   
 }
 
@@ -261,5 +198,74 @@ void loose() {
   delay(300);
   lc.clearDisplay(0);
   delay(500);
+  
+}
 
+void updateEnemies() {
+
+  //On éteint la led qui était allumer avant d'allumer la suivante
+  lc.setLed(0, rowState, columnState, false);
+  
+  //boucle while lorsque le point ne sort pas de la matrice
+  if ((rowState != abs(rowStart-7)) & (columnState != abs(columnStart-7) )) {
+    if (rowStart == 0) {
+      rowState = rowState + 1;
+    }
+    if (rowStart == 7) {
+      rowState --;
+    }
+    if (columnStart == 0) {
+      columnState ++;
+    }
+    if (columnStart == 7) {
+      columnState --;
+    }
+  }
+  //lorsque l'on sort de la boucle (de la matrice) on recrée un nouveau point de départ
+  else {
+    //on génère aléatoirement les nouveaux paramètres
+    rowOrColumn = random(0,2);
+    highOrLow = random(0,2);
+    startingPosition = random(0,8);
+
+    if (rowOrColumn == 0) {
+      columnState = startingPosition;
+      if (highOrLow = 0) {
+        rowState = 0;
+      }
+      else {
+        rowState = 7;
+      }
+    }
+    else {
+      rowState = startingPosition;
+      if (highOrLow = 0) {
+        columnState = 0;
+      }
+      else {
+        columnState = 7;
+      }
+    }
+
+    //On redéfinie les nouveaux points de départ
+    columnStart = columnState;
+    rowStart = rowState;
+
+  }
+
+  //On allume la nouvelle led
+  lc.setLed(0, rowState, columnState, true);
+  delay(delaytime);
+}
+
+
+void collision() {
+  attachInterrupt(digitalPinToInterrupt(2), buttonPressed, FALLING);
+  while ((xPosition == rowState) & (yPosition == columnState)) {
+    loose();
+ }
+}
+
+void buttonPressed() {
+  setup();
 }
